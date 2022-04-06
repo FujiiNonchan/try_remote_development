@@ -26,11 +26,11 @@ impl Pom for Qom{
 
     fn try_thread(&self, p:i32)->i32{
         let q = Arc::new(Mutex::new(0));
+        let q0 = q.clone();
         thread::spawn({
-            let q = q.clone();
             move || {
-            let mut q = q.lock().unwrap();
-            *q += 3;
+            let mut q0 = q0.lock().unwrap();
+            *q0 += 3;
         }}).join().unwrap();
         let q = q.lock().unwrap();
         p + *q
