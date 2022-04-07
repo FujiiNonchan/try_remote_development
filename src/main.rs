@@ -1,5 +1,6 @@
 use std::time::Duration;
 use std::io;
+use std::{thread};
 
 #[derive(Debug)]
 enum Element{
@@ -77,14 +78,18 @@ fn main() {
     let mut port = serialport::new("/dev/ttyUSB0", 9600)
     .timeout(Duration::from_millis(1000))
     .open().expect("Failed to open port");
-    // let _ = port.write(&test_vec[0].convert_to_u8()).expect("Write failed!");
-    // let t = port.write("test".as_bytes()).expect("Write failed!");
+    // let _ = port.write(&rest_vec.convert_to_u8()).expect("Write failed!");
+    // let _ = port.write("test".as_bytes()).expect("Write failed!");
     // print!("{}", t);
 
-    loop{
+    for _ in 0..100{
+         // let _ = port.write("test".as_bytes()).expect("Write failed!");
+         // thread::sleep(Duration::from_millis(50));
         for res in &rest_vec{
             port.write(&res.convert_to_u8()).expect("Write failed!");
+            thread::sleep(Duration::from_millis(10));
         }
     }
+
 }
 
