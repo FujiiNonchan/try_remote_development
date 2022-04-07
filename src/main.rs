@@ -1,23 +1,50 @@
-struct Pom{
-    p:u8,
-    q:Qom
+use std::thread;
+use std::sync::{Arc, Mutex};
+
+trait Pom{
+    fn get_dummy(&self, p:String)->String;
+    fn try_thread(&self, p:i32)->i32;
 }
 
-enum Qom{
-    Qom1,
-    Qom2
+#[allow(dead_code)]
+struct Qom{
+    p:u8,
+    r:Rom,
+    s:String
+}
+
+#[allow(dead_code)]
+enum Rom{
+    R1,
+    R2
+}
+
+impl Pom for Qom{
+    fn get_dummy(&self, p:String)->String{
+        p +"qom"
+    }
+
+    fn try_thread(&self, p:i32)->i32{
+        let q = Arc::new(Mutex::new(0));
+        let q0 = q.clone();
+        thread::spawn({
+            move || {
+            let mut q0 = q0.lock().unwrap();
+            *q0 += 3;
+        }}).join().unwrap();
+        let q = q.lock().unwrap();
+        p + *q
+    }
 }
 
 fn main() {
-    println!("Hello, world!");
-    println!("{}",pom());
-    let pom = Pom{
+    let qom = Qom{
         p:3,
-        q:Qom::Qom1
+        r:Rom::R2,
+        s:"dummy".to_string()
     };
+    println!("get_dummy={}", qom.get_dummy("ダミー".to_string()));
+    println!("try_thread={}", qom.try_thread(5));
 
 }
 
-fn pom() -> &'static str {
-    "pom"
-}
