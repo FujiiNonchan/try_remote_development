@@ -67,7 +67,6 @@ impl Input {
 }
 
 fn get_element(c:Option<char>)->Element{
-    // println!("c:{:?}", c);
     match c {
         Some('0')=>Element::BATSU,
         Some('1')=>Element::MARU,
@@ -105,7 +104,6 @@ fn main() {
                                 end:get_element(mem_chars.next()),
                             }
                         );
-                        // println!("{}", mem);
                     }
                 }
             }
@@ -114,20 +112,12 @@ fn main() {
     }
 
     let _ports = serialport::available_ports().expect("No ports found!");
-    // for p in ports {
-    //    println!("{}", p.port_name);
-    //}
 
     let mut port = serialport::new("/dev/ttyUSB0", 9600)
     .timeout(Duration::from_millis(1000))
     .open().expect("Failed to open port");
-    // let _ = port.write(&rest_vec.convert_to_u8()).expect("Write failed!");
-    // let _ = port.write("test".as_bytes()).expect("Write failed!");
-    // print!("{}", t);
 
     for _ in 0..100{
-         // let _ = port.write("test".as_bytes()).expect("Write failed!");
-         // thread::sleep(Duration::from_millis(50));
         for res in &rest_vec{
             port.write(&res.convert_to_u8()).expect("Write failed!");
             thread::sleep(Duration::from_millis(10));
