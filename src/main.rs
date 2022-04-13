@@ -111,6 +111,7 @@ fn main() {
         }
     }
 
+    let dummy_thread = thread::spawn(move ||{
     let _ports = serialport::available_ports().expect("No ports found!");
 
     let mut port = serialport::new("/dev/ttyUSB0", 9600)
@@ -123,5 +124,7 @@ fn main() {
             thread::sleep(Duration::from_millis(10));
         }
     }
+    });
 
+    dummy_thread.join().unwrap();
 }
