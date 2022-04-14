@@ -6,9 +6,11 @@ use std::io;
 trait Pom{
     fn get_dummy(&self, p:String)->String;
     fn try_thread(&self, p:i32)->i32;
+    fn test_20220415(&self)->Self;
 }
 
 #[allow(dead_code)]
+#[derive(Clone)]
 struct Qom{
     p:u8,
     r:Rom,
@@ -16,6 +18,7 @@ struct Qom{
 }
 
 #[allow(dead_code)]
+#[derive(Clone)]
 enum Rom{
     R1,
     R2
@@ -36,6 +39,12 @@ impl Pom for Qom{
         }}).join().unwrap();
         let q = q.lock().unwrap();
         p + *q
+    }
+
+    fn test_20220415(&self)->Self{
+
+        let p = *self.clone();
+        
     }
 }
 #[derive(Debug)]
