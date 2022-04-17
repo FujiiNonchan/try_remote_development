@@ -42,9 +42,7 @@ impl Pom for Qom{
     }
 
     fn test_20220415(&self)->Self{
-
-        let p = *self.clone();
-        
+        (*self).clone()
     }
 }
 #[derive(Debug)]
