@@ -3,10 +3,11 @@ use std::sync::{Arc, Mutex};
 use std::time::Duration;
 use std::io;
 
-trait Pom{
+trait Pom<T>{
     fn get_dummy(&self, p:String)->String;
     fn try_thread(&self, p:i32)->i32;
     fn test_20220415(&self)->Self;
+    fn test_20220418(&self, element: Element)->Option<T>;
 }
 
 #[allow(dead_code)]
@@ -24,7 +25,7 @@ enum Rom{
     R2
 }
 
-impl Pom for Qom{
+impl Pom<Qom> for Qom{
     fn get_dummy(&self, p:String)->String{
         p +"qom"
     }
@@ -44,7 +45,13 @@ impl Pom for Qom{
     fn test_20220415(&self)->Self{
         (*self).clone()
     }
+
+    fn test_20220418(&self, element: Element)->Option<Self>{
+        *self.s =  String::from("test");
+        Some(*self)
+    }
 }
+
 #[derive(Debug)]
 enum Element{
     MARU,
