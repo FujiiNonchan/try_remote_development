@@ -7,7 +7,7 @@ trait Pom<T>{
     fn get_dummy(&self, p:String)->String;
     fn try_thread(&self, p:i32)->i32;
     fn test_20220415(&self)->Self;
-    fn test_20220418(&self, element: Element)->Option<T>;
+    fn test_20220418(&mut self, element: Element)->Option<T>;
 }
 
 #[allow(dead_code)]
@@ -46,9 +46,16 @@ impl Pom<Qom> for Qom{
         (*self).clone()
     }
 
-    fn test_20220418(&self, element: Element)->Option<Self>{
-        *self.s =  String::from("test");
-        Some(*self)
+    fn test_20220418(&mut self, element: Element)->Option<Self>{
+
+        let s:String;
+        match element {
+            Element::MARU=> s = String::from("〇"),
+            Element::BATSU=> s = String::from("×"),
+        }
+        (*self).s =  s;
+
+        Some((*self).clone())
     }
 }
 
