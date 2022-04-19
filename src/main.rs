@@ -3,11 +3,20 @@ use std::sync::{Arc, Mutex};
 use std::time::Duration;
 use std::io;
 
+enum Test20220420Error{
+    Error1,
+    Error2,
+    Error3
+}
+
+type Test20220420Result<T> = Result<T, Test20220420Error>;
+
 trait Pom<T>{
     fn get_dummy(&self, p:String)->String;
     fn try_thread(&self, p:i32)->i32;
     fn test_20220415(&self)->Self;
     fn test_20220418(&mut self, element: Element)->Option<T>;
+    fn test_20220420(&mut self) -> Box<dyn Fn(T)->Test20220420Result<T>>;
 }
 
 #[allow(dead_code)]
@@ -24,6 +33,7 @@ enum Rom{
     R1,
     R2
 }
+
 
 impl Pom<Qom> for Qom{
     fn get_dummy(&self, p:String)->String{
@@ -56,6 +66,10 @@ impl Pom<Qom> for Qom{
         (*self).s =  s;
 
         Some((*self).clone())
+    }
+
+    fn test_20220420(&mut self) -> Box<dyn Fn(Self)->Test20220420Result<Self>>{
+        
     }
 }
 
