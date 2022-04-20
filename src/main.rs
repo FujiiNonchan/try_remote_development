@@ -69,9 +69,13 @@ impl Pom<Qom> for Qom{
     }
 
     fn test_20220420(&mut self) -> Box<dyn Fn(Self)->Test20220420Result<Self>>{
-        
+        Box::new(move |r| {
+            r.p = (*self).p;
+            Ok(r)
+        })
     }
 }
+
 
 #[derive(Debug)]
 enum Element{
