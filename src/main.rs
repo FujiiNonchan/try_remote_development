@@ -3,6 +3,7 @@ use std::sync::{Arc, Mutex};
 use std::time::Duration;
 use std::io;
 
+#[derive(Debug)]
 enum Test20220420Error{
     Error1,
     Error2,
@@ -21,6 +22,7 @@ trait Pom<T>{
 
 #[allow(dead_code)]
 #[derive(Clone)]
+#[derive(Debug)]
 struct Qom{
     p:u8,
     r:Rom,
@@ -29,6 +31,7 @@ struct Qom{
 
 #[allow(dead_code)]
 #[derive(Clone)]
+#[derive(Debug)]
 enum Rom{
     R1,
     R2
@@ -69,8 +72,9 @@ impl Pom<Qom> for Qom{
     }
 
     fn test_20220420(&mut self) -> Box<dyn Fn(Self)->Test20220420Result<Self>>{
-        Box::new(move |r| {
-            r.p = (*self).p;
+        let arc_self = Arc::new((*self).clone());
+        Box::new(move |mut r| {
+            r.p = arc_self.p;
             Ok(r)
         })
     }
@@ -113,7 +117,27 @@ fn get_element(c:Option<char>)->Element{
     }
 }
 
-fn main() {
+fn main(){
+    let mut qom = Qom{
+        p:3,
+        r:Rom::R2,
+        s:"dummy".to_string()
+    };
+
+    let mut qom2 = Qom{
+        p:4,
+        r:Rom::R1,
+        s:"dummy2".to_string()
+    };
+
+    let test_fn = qom.test_20220420();
+
+    let qom3 = test_fn(qom2);
+    println!("qom3:{:?}", qom3);
+
+}
+
+fn main_20220422bk() {
     let qom = Qom{
         p:3,
         r:Rom::R2,
