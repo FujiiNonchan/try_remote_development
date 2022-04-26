@@ -80,6 +80,9 @@ impl Pom<Qom> for Qom{
     }
 }
 
+fn test_20220427(){
+    let  a:'static + usize;
+}
 
 #[derive(Debug)]
 enum Element{
